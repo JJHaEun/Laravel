@@ -29,6 +29,10 @@ Route::patch('/products/{product}', [ProductController::class, 'update'])->name(
 Route::delete('/products/{product}', [ProductController::class, 'delete_yn'])->name('products.del_yn');
 
 
-
+// 파일 업로드 테스트용
 Route::get('/upload',[UploadController::class,'uploadForm'])->name('uploadForm');
 Route::post('/upload',[UploadController::class,'uploadFile'])->name('upload.uploadFile');
+
+// 파일 업로드 성공후
+
+Route::get('/products/success');
