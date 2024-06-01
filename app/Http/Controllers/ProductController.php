@@ -15,11 +15,13 @@ class ProductController extends Controller
 
     public function index($seq = 1){
         // products 의 데이터를 최신순으로 페이징을 해서 가져옵니다.
-        $products =  Product::latest()->paginate(15);
+        $products =  Product::where('USE_YN', '!=', 'N')->latest()->paginate(15);
         // products/index.blade 에 $products 를 보내줍니다
         return view('products.index', compact('products')); //
     }
     
+
+
     public function create(){
         return view('products.create');
     }
@@ -37,9 +39,38 @@ class ProductController extends Controller
     }
     
 
+
+
     // 상세 페이지
     public function show(product $product){
     // show 에 경우는 해당 페이지의 모델 값이 파라미터로 넘어옵니다.
         return view('products.show', compact('product'));
     }
+
+
+
+    // 수정하기
+    public function edit(product $product){
+        return view('products.edit', compact('product'));
+    }
+
+    public function update(Request $request, product $product){
+        $validatedData  = $request->validate([
+            'name' => 'required',
+            'content' => 'required'
+        ]);
+        $product->update($validatedData);
+        return redirect()->route('products.index')->with('success', 'Product has been logically deleted.');
+    }
+
+
+
+    // 삭제하기(논리적 삭제)
+    public function delete_yn(product $product){
+        $product->update(['USE_YN' => 'N']);
+        
+        return redirect()->route('products.index');
+    }
+
+    // 삭제하기(물리적 삭제)
 }

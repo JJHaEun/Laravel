@@ -10,5 +10,5 @@ class product extends Model
     use HasFactory;
     protected $primaryKey = 'seq';
     
-    protected $fillable = ['name', 'content'];
+    protected $fillable = ['name', 'content','USE_YN'];
 }

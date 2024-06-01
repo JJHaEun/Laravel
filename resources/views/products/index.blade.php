@@ -33,7 +33,14 @@
                 <th scope="row">{{$key+1 + (($products->currentPage()-1) * 10)}}</th>
                 <td><a href="{{route('products.show', $product->seq)}}">{{$product->name}}</a></td>
                 <td>{{$product->created_at}}</td>
-                <td>Edit/Delete</td>
+                <td><a href="{{route('products.edit',$product)}}">Edit</a>
+                /<a href="#" onclick="event.preventDefault(); if(confirm('정말로 삭제하시겠습니까?')) { 
+    document.getElementById('delete-form').submit(); }">Delete</a>
+
+<form id="delete-form" action="{{ route('products.del_yn', $product) }}" method="POST" style="display: none;">
+    @csrf
+    @method('DELETE')
+</form>
             </tr>
         @endforeach
         </tbody>

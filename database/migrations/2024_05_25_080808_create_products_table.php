@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name', 30);
             $table->text('content');
             $table->timestamps(0);
+            $table->enum('USE_YN',['Y','N'])->default('Y');
         });
     }
 
@@ -24,6 +25,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('products');
+        Schema::table('products', function (Blueprint $table) {
+            $table->dropColumn('USE_YN');
+        });
     }
 };
